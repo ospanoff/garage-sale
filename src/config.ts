@@ -1,5 +1,5 @@
 const firebaseConfig = {
-  apiKey: import.meta.env.API_KEY,
+  apiKey: import.meta.env.FIREBASE_API_KEY,
   authDomain: "garage-sale-a45ef.firebaseapp.com",
   projectId: "garage-sale-a45ef",
   storageBucket: "garage-sale-a45ef.appspot.com",
