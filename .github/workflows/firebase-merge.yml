@@ -17,6 +17,10 @@ jobs:
         run: npm ci
       - name: Build
         run: npm run build
+        env:
+          VITE_FIREBASE_API_KEY: ${{ secrets.FIREBASE_API_KEY }}
+          VITE_EMAIL_DOMAIN: ${{ secrets.EMAIL_DOMAIN }}
+          VITE_ADMIN_EMAIL: ${{ secrets.ADMIN_EMAIL }}
       - name: Archive Production Artifact
         uses: actions/upload-artifact@master
         with:
@@ -36,10 +40,13 @@ jobs:
           path: dist
       - name: Install Functions deps
         run: cd functions && npm ci && cd -
+      - name: Generate Firestore rules
+        run: bash scripts/generate_firestore_rules.sh
+        env:
+          VITE_ADMIN_EMAIL: ${{ secrets.ADMIN_EMAIL }}
       - name: Deploy to Firebase
         uses: w9jds/firebase-action@master
         with:
           args: deploy
         env:
           GCP_SA_KEY: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_GARAGE_SALE_A45EF }}
-          FIREBASE_API_KEY: ${{ secrets.FIREBASE_API_KEY }}

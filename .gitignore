@@ -1,4 +1,5 @@
 .firebase
+firestore.rules
 
 # Logs
 logs
